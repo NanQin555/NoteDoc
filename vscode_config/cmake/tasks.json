@@ -1,0 +1,44 @@
+{
+    "version": "2.0.0",
+    "options": {
+        "cwd":"${workspaceFolder}"
+    },
+    "tasks": [
+        {
+            "label": "cmake",
+            "type": "shell",
+            "command": "cmake",
+            "args":[
+                "./llvm",
+                "-DLLVM_TARGETS_TO_BUILD=RISCV",
+                "-B",
+                "build",
+                "-G",
+                "Ninja",
+                "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
+            ]
+        },
+        {
+            "label":"ninja",
+            "group":{
+                "kind": "build",
+                "isDefault": true
+            },
+            "command":"ninja",
+            "args": [
+                "-C",
+                "build",
+                "-j",
+                "8"
+            ]
+        },
+        {
+            "label":"Build",
+            "dependsOrder": "sequence",
+            "dependsOn":[
+                "cmake",
+                "ninja"
+            ]
+        }
+    ]
+}
