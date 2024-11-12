@@ -1,0 +1,1 @@
+This repository collect all my notes about compiler, c/c++, backup, and so on.
