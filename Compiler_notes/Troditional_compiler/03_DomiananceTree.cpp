@@ -59,7 +59,9 @@ void domiananceTree() {
     DFS(1);
     // 均初始化为本身
     for(int i=1; i<=n; i++) sdom[i]=set[i]=minus_num[i]=i;
-    // 逆 前序DFS序, 保证当前遍历节点的子孙一定被遍历过了
+    
+    // 图的深度优先遍历，部分前中后序
+    // 逆 DFS序, 保证当前遍历节点的子孙一定被遍历过了
     for(int i=cont; i>=2; i--) {
         int node = dfsord[i];
         for(int pre = Index[1][node]; pre; pre = edge[pre].next) {
