@@ -1,0 +1,9 @@
+.vscode/
+Compiler_notes/Poly/ppcg/test*
+!Compiler_notes/Poly/ppcg/tests/
+
+Compiler_notes/thridParty/islplot/*.pyc
+Compiler_notes/thridParty/islplot/*.egg-info
+Compiler_notes/thridParty/islplot/tmp/
+Compiler_notes/thridParty/islplot/build/
+Compiler_notes/thridParty/islplot/dist/

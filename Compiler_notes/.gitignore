@@ -1,9 +1,0 @@
-.vscode/
-Poly/ppcg/test*
-!Poly/ppcg/tests/
-
-thridParty/islplot/*.pyc
-thridParty/islplot/*.egg-info
-thridParty/islplot/tmp/
-thridParty/islplot/build/
-thridParty/islplot/dist/
