@@ -54,3 +54,4 @@ tblgen: `build/bin/mlir-tblgen -gen-dialect-defs mlir/examples/toy/Ch2/include/t
 print: `/home/nanqin/project/llvm-project/build/bin/toyc-ch2 /home/nanqin/project/llvm-project/mlir/examples/toy/Ch1/ast.toy -emit=mlir -mlir-print-debuginfo`
 
 参数处理：opt类
+
