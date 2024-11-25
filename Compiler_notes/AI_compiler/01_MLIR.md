@@ -11,7 +11,6 @@ MLIR 可复用, 可扩展的编译器架构的解决方案, 解决实现多套�
 
 MLIR 被设计为一种混杂的通用的IR, 支持不同的需求, 更好地统一在MLIR上进行问题处理和优化
 
-
 MLIR的学习过程如下:
 1. 学习MLIR基本模块;
 2. 学习MLIR提供的Dialects, 各个Dialects的定位, 以及为弥补软硬件gap, 提供的这些gap的分类和关联。
@@ -27,7 +26,6 @@ MLIR的学习过程如下:
 [从零开始教你写一个MLIR Pass](https://zhuanlan.zhihu.com/p/708819963)
 
 [Toy Tutorial](https://mlir.llvm.org/docs/Tutorials/Toy/)
-
 
 # MLIR 表达式
 
@@ -54,4 +52,3 @@ tblgen: `build/bin/mlir-tblgen -gen-dialect-defs mlir/examples/toy/Ch2/include/t
 print: `/home/nanqin/project/llvm-project/build/bin/toyc-ch2 /home/nanqin/project/llvm-project/mlir/examples/toy/Ch1/ast.toy -emit=mlir -mlir-print-debuginfo`
 
 参数处理：opt类
-
