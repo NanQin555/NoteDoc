@@ -238,3 +238,88 @@ int main() {
 “一个复杂对象”的创建工作 
 
 ![alt text](image/Builder.png)
+
+# 单件模式 Singleton
+
+“对象性能”模式
+
+保证在系统中只存在一个实例，解决性能问题
+
+类的设计者的责任
+
+``` cpp
+class Singleton{
+private:
+   Singleton();
+   Singleton(const Singleton& other);
+public:
+   static Singleton* getInstance();
+   static Singleton* m_instance();
+};
+
+Singleton* Singleton::m_instance=nullptr;
+
+// 多线程不安全版
+Singleton* Singleton::getInstance() {
+   if(m_instance ==nullptr) {
+      m_instance = new Singleton();
+   }
+   return m_instance;
+}
+
+// 线程安全版
+
+// 加锁，但代价过高
+Singleton* Singleton::getInstance() {
+   Lock lock;
+   if(m_instance == nullptr) {
+      m_instance = new Singleton();
+   }
+   return m_instance;
+}
+
+// 双检查锁，但由于内存读写reorder不安全
+// double check
+Singleton* Singleton::getInstance() {
+   if(m_instance == nullptr) {
+      Lock lock;
+      if(m_instance==nullptr) {
+         m_instance = new Singleton();
+      }
+   }
+   return m_instance;
+}
+
+// 解决办法： volatile
+// c++ 11 后
+std::atomic<Singleton*> Singleton::m_instance;
+std::mutex Singleton::m_mutex;
+
+Singleton* Singleton::getInstance() {
+   Singleton* tmp = m_instance.load(std::memory_order_relaxed);
+   std::atomic_thread_fence(std::memory_order_acquire);
+   if(tmp == nullptr) {
+      std::lock_guard<std::mutex> lock(m_mutex);
+      tmp = m_instance.load(std::memory_order_relaxed);
+      if(tmp == nullptr) {
+         tmp = new Singleton;
+         std::atomic_thread_fence(std::memory_order_release);
+         m_instance.store(tmp, std::memory_order_relaxed);
+      }
+   }
+   return tmp;
+}
+
+```
+保证一个类只有一个实例，并提供一个全局访问点
+
+复杂在多线程下安全的实现
+
+# 享元模式 Flyweight
+
+"性能模式" 
+
+运用共享技术有效地支持大量细粒度的对象
+
+![alt text](image/Flyweight.png)
+
