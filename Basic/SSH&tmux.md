@@ -25,7 +25,7 @@ Github: `ssh -T git@github.com`
 
 use `tmux`
 
-or `tmux new -S name_you_like`
+or `tmux new -s name_you_like`
 
 ## SSH connect tmux
 
