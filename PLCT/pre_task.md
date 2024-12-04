@@ -59,7 +59,7 @@ original.xml <-> vector1.xml : 向量化有效 加速比在 2.53~2.95
 
 vector1.xml <-> vector1_1.xml : 几乎相同，mask是否向量化对性能几乎没有影响
 
-
+vector1_1.xml <-> vector1_2.xml : 外循环进行循环展开，提升巨大
 
 ## Q & A
 
