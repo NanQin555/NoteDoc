@@ -7,11 +7,11 @@ int z[10];
 
 void vec_add_rvv(int* dst, int* lhs, int* rhs, size_t avl) {
     vint32m2_t vlhs, vrhs, vres;
-    for (size_t vl; (vl = vsetvl_e32m2(avl));avl -= vl, lhs += vl, rhs += vl, dst += vl) {
-        vlhs = vle32_v_i32m2(lhs, vl);
-        vrhs = vle32_v_i32m2(rhs, vl);
-        vres = vadd_vv_i32m2(vlhs, vrhs, vl);
-        vse32_v_i32m2(dst, vres, vl);
+    for (size_t vl; (vl = __riscv_vsetvl_e32m2(avl));avl -= vl, lhs += vl, rhs += vl, dst += vl) {
+        vlhs = __riscv_vle32_v_i32m2(lhs, vl);
+        vrhs = __riscv_vle32_v_i32m2(rhs, vl);
+        vres = __riscv_vadd_vv_i32m2(vlhs, vrhs, vl);
+        __riscv_vse32_v_i32m2(dst, vres, vl);
     }
 }
 

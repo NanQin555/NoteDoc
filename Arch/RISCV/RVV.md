@@ -6,21 +6,21 @@ Vector register is mutable, flexible
 
 ![alt text](image/comparsion.png)
 
+.c to .exe: `clang-14 --target=riscv64-unknown-elf -march=rv64gcv --gcc-toolchain=/opt/riscv -O2 -g ./rvv.c -o ./rvv` or `riscv64-unknown-linux-gnu-gcc -static -march=rv64gcv rvv.c -g -o rvv`
 
-.c to .exe: `clang-14 --target=riscv64-unknown-elf -march=rv64gv --gcc-toolchain=/opt/riscv -O2 -g ./rvv.c -o ./rvv`
-
-.c to .s: `clang-14 --target=riscv64-unknown-elf -march=rv64gv --gcc-toolchain=/opt/riscv -O2 -S ./rvv.c -o ./rvv.s`
+.c to .s: `clang-14 --target=riscv64-unknown-elf -march=rv64gcv --gcc-toolchain=/opt/riscv -O2 -S ./rvv.c -o ./rvv.s`
 
 qemu: `qemu-riscv64 -cpu rv64,v=true ./rvv`, 需要新版本qemu
 
+debug qemu: `qemu-riscv64 -g 1234 -cpu rv64,v=true ./rvv` and `riscv64-unknown-elf-gdb -q ./rvv` and `target remote :1234`
+
 ## Reference
 
-[BSC: Introductiontothe RISC-V Vector 
-Extension](https://eupilot.eu/wp-content/uploads/2022/11/RISC-V-VectorExtension-1-1.pdf)
+[BSC: Introductiontothe RISC-V Vector Extension](https://eupilot.eu/wp-content/uploads/2022/11/RISC-V-VectorExtension-1-1.pdf)
 
+[The RISC-V Instruction Set Manual Volume I](./Reference/unpriv-isa-asciidoc.pdf)
 
-
-# RVV
+# RVV 
 
 ## Registers 
 
@@ -106,21 +106,21 @@ ceil 上取整
 
 
 
------------------------
+~~## Context status in mstatus~~
 
-## Context status in mstatus
-
-VS: defined analogously to the floating-point context status field, FS
+~~VS: defined analogously to the floating-point context status field, FS~~
 
 # Instructions
+
+**功能分类：操控寄存器，访存，算数逻辑，类型转换**
+
+**类型分类：v x w imm mask**
 
 vle8.v vle16.v vle32.v vle64.v
 
 vse8.v ...
 
 vluxei8.v vd, (rs1), vs2, vm vluxei16.v ...
-
-
 
 vlm.v  vsm.v
 
@@ -154,3 +154,40 @@ vminu.vv vminu.vx vmin.vv vmin.vx vmaxu.vv vmaxu.vx vmax.vv vmax.vx
 
 vsaddu.vv vsaddu.vx
 
+## 命名规则
+
+### policy and masked
+
+vm vta vma
+
+no suffix: unmasked(vm=1) and tail-agnostic(vta=1)
+
+_tu suffix: unmasked(vm=1) and tail-undisturbed(vta=0)
+
+_m suffix: masked(vm=0) and tail-agnostic(vta=1) and mask-agnostik(vma=1)
+
+_tum suffix: masked(vm=0) and tail-undisturbed(vta=0) and mask-agnostic(vma=1)
+
+_mu suffix: masked and tail-agnostic and mask-undisturbed
+
+_tumu ...
+
+m: repersents mask
+
+tu: repersents tail-undisturbed
+
+mu: repersents masked and mask-undisturbed
+
+without u(tu/mu): agnositic
+
+### Explicit naming scheme
+
+__riscv_{V_INSTRUCTION_MNEMONIC}_{OPERAND_MNEMONIC}_{RETURN_TYPE}_{ROUND_MODE}_{POLICY}{(...)}
+
+
+
+### reduction 
+
+能表示的元素个数不变：
+
+vl = vlen / sew * lmul
