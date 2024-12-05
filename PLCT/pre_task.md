@@ -14,7 +14,6 @@ Reference:
     -DWITH_HAL_RVV=ON or OFF
 4. 对比效果：`/home/nanqin/project/opencv/modules/ts/misc/summary.py test1.xml test2.xml`
 
-
 ## 过程
 
 看代码，了解函数作用
@@ -25,9 +24,15 @@ Reference:
 
 实现向量化 -> RVV Intrinsic 不熟 -> 学习 RVV Intrinsic 手册 + RVV ISA + 小实验
 
-12.4 17:30 向量化ver1.0: 仅针对内层循环进行向量化 -> 改进方向：对内层进行循环展开 将mask也进行向量化
+向量化ver1.0: 仅针对内层循环进行向量化 -> 改进方向：对内层进行循环展开 将mask也进行向量化
 
-12.4 20：48 向量化ver1.1: 完成对mask的向量化 -> 改进方向：对内层进行循环展开
+向量化ver1.1: 完成对mask的向量化 -> 改进方向：对内层进行循环展开
+
+向量化ver1.2: 完成外层的循环展开 -> 改进方向: 扩大lmul
+
+向量化ver1.3: 扩大lmul
+
+向量化ver2.0: 完成CV_8UC4的向量化
 
 对比效果
 
@@ -51,15 +56,19 @@ Reference:
 
 原版：original.xml
 标量版：scalar.xml
-rvv版：vector1.xml vector1_1.xml
+rvv版：vector1.xml vector1_1.xml vector1_2.xml vector1_3.xml
 
 结论：
 
-original.xml <-> vector1.xml : 向量化有效 加速比在 2.53~2.95
+original.xml <-> vector1_0.xml : CV_8UC1 向量化有效 加速比在 2.53~2.95
 
-vector1.xml <-> vector1_1.xml : 几乎相同，mask是否向量化对性能几乎没有影响
+vector1.xml <-> vector1_1.xml : CV_8UC1 几乎相同，mask是否向量化对性能几乎没有影响
 
-vector1_1.xml <-> vector1_2.xml : 外循环进行循环展开，提升巨大
+original.xml <-> vector1_2.xml && vector1_1.xml <-> vector1_2.xml : CV_8UC1 外循环进行循环展开，提升巨大, 对比original加速比在 9.62~663.89
+
+vector1_2.xml <-> vector1_3.xml : CV_8UC1 扩大lmul，加速效果降低 0.68~0.9
+
+original.xml <-> vector2_0.xml : CV_8UC4 加速有效 加速比在 34.31~1744.84
 
 ## Q & A
 
