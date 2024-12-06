@@ -9,10 +9,26 @@ DDL: 1周 12.9 19:00
 Reference:
 1. (线上测试平台)[https://cloud.spacemit.com/]
 2. opencv测试工具： ./opencv_perf_core --gtest_filter="Size_MatType_meanStdDev.meanStdDev/*" or/3 `./opencv_perf_core --gtest_filter="Size_MatType_meanStdDev.meanStdDev/*" --gtest_output=xml:./result.xml`
-3. (编译opencv)[https://gist.github.com/hanliutong/fad882f1b0df24183d50eac92f576aad] 
+3. (编译opencv)[https://gist.github.com/hanliutong/fad882f1b0df24183d50eac92f576aad]
    `cmake -G Ninja .. -DCMAKE_TOOLCHAIN_FILE=../platforms/linux/riscv64-gcc.toolchain.cmake -DBUILD_EXAMPLES=OFF -DWITH_OPENCL=OFF  -DTOOLCHAIN_COMPILER_LOCATION_HINT=/opt/riscv/bin -DENABLE_RVV=ON -DWITH_HAL_RVV=ON -DBUILD_SHARED_LIBS=OFF -DOPENCV_EXTRA_CXX_FLAGS="-static -static-libgcc -static-libstdc++" -DOPENCV_EXTRA_C_FLAGS="-static -static-libgcc -static-libstdc++"`
     -DWITH_HAL_RVV=ON or OFF
 4. 对比效果：`/home/nanqin/project/opencv/modules/ts/misc/summary.py test1.xml test2.xml`
+
+## 要点/难点
+1. 找到可以向量化的部分 
+2. 实现rvv intrinsic
+   1. 确认数据类型
+   2. 考虑返回值/参数类型
+   3. 考虑指令格式
+
+## 思路
+
+已知RGB (0-255)
+
+1. 每次处理一行中vl个元素，进行redsum，累加到sum中
+2. 循环展开一次处理多行中vl个元素，进行redsum，累加到sum中
+
+累加的时候至少 u8 -> u16 才能放下
 
 ## 过程
 
@@ -34,24 +50,12 @@ Reference:
 
 向量化ver2.0: 完成CV_8UC4的向量化
 
+向量化ver3.0: 完成CV_32FC1的向量化
+
 对比效果
 
-## 要点
-1. 找到可以向量化的部分 
-2. 实现rvv intrinsic
-   1. 确认数据类型
-   2. 考虑返回值/参数类型
-   3. 考虑指令格式
+12.6 done
    
-## 思路
-
-已知RGB (0-255)
-
-1. 每次处理一行中vl个元素，进行redsum，累加到sum中
-2. 循环展开一次处理多行中vl个元素，进行redsum，累加到sum中
-
-累加的时候至少 u8 -> u16 才能放下
-
 ## compare
 
 原版：original.xml
@@ -69,6 +73,10 @@ original.xml <-> vector1_2.xml && vector1_1.xml <-> vector1_2.xml : CV_8UC1 外�
 vector1_2.xml <-> vector1_3.xml : CV_8UC1 扩大lmul，加速效果降低 0.68~0.9
 
 original.xml <-> vector2_0.xml : CV_8UC4 加速有效 加速比在 34.31~1744.84
+
+original.xml <-> vector3_0.xml : CV_32FC1 加速有效, 加速比在 36.08~2875.51
+
+vector2_0.xml <-> vector3_0.xml : CV_8UC4 加速略有降低
 
 ## Q & A
 
