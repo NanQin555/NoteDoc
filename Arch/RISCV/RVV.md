@@ -184,10 +184,16 @@ without u(tu/mu): agnositic
 
 __riscv_{V_INSTRUCTION_MNEMONIC}_{OPERAND_MNEMONIC}_{RETURN_TYPE}_{ROUND_MODE}_{POLICY}{(...)}
 
-
-
 ### reduction 
 
 能表示的元素个数不变：
 
 vl = vlen / sew * lmul
+
+
+``` c
+
+for(int i=1;i<=n;i++)
+    cout<<a[i]<<" \n"[i==n];
+
+```

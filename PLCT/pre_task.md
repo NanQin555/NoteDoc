@@ -59,10 +59,12 @@ Reference:
 ## compare
 
 原版：original.xml
+
 标量版：scalar.xml
+
 rvv版：vector1.xml vector1_1.xml vector1_2.xml vector1_3.xml
 
-结论：
+### 结论
 
 original.xml <-> vector1_0.xml : CV_8UC1 向量化有效 加速比在 2.53~2.95
 
