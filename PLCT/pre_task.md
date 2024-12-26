@@ -12,7 +12,7 @@ Reference:
 1. (线上测试平台)[https://cloud.spacemit.com/]
 2. opencv测试工具： ./opencv_perf_core --gtest_filter="Size_MatType_meanStdDev.meanStdDev/*" or/3 `./opencv_perf_core --gtest_filter="Size_MatType_meanStdDev.meanStdDev/*" --gtest_output=xml:./result.xml`
 3. (编译opencv)[https://gist.github.com/hanliutong/fad882f1b0df24183d50eac92f576aad]
-   `cmake -G Ninja .. -DCMAKE_TOOLCHAIN_FILE=../platforms/linux/riscv64-gcc.toolchain.cmake -DBUILD_EXAMPLES=OFF -DWITH_OPENCL=OFF  -DTOOLCHAIN_COMPILER_LOCATION_HINT=/opt/riscv/bin -DENABLE_RVV=ON -DWITH_HAL_RVV=ON -DBUILD_SHARED_LIBS=OFF -DOPENCV_EXTRA_CXX_FLAGS="-static -static-libgcc -static-libstdc++" -DOPENCV_EXTRA_C_FLAGS="-static -static-libgcc -static-libstdc++"`
+   `cmake -G Ninja .. -DCMAKE_TOOLCHAIN_FILE=../platforms/linux/riscv64-gcc.toolchain.cmake -DBUILD_EXAMPLES=OFF -DWITH_OPENCL=OFF  -DTOOLCHAIN_COMPILER_LOCATION_HINT=/opt/riscv/bin -DENABLE_RVV=ON -DWITH_HAL_RVV=ON -DBUILD_SHARED_LIBS=OFF -DOPENCV_EXTRA_CXX_FLAGS="-static -static-libgcc -static-libstdc++" -DOPENCV_EXTRA_C_FLAGS="-static -static-libgcc -static-libstdc++ "` -DCMAKE_BUILD_TYPE=
     -DWITH_HAL_RVV=ON or OFF
 4. 对比效果：`/home/nanqin/project/opencv/modules/ts/misc/summary.py test1.xml test2.xml`
 

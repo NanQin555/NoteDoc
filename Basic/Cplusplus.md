@@ -13,7 +13,7 @@
 ``` cpp
 class A {
     private a;
-}
+} 
 class B: public A {
 public:
     using A::a; // 允许访问A中私有变量，修改权限到public
@@ -520,7 +520,7 @@ stl容器
 1. thread
 2. mutex, lock_guard
 3. conditoin_variable
-4. atomic
+4. atomicf
 
 右值引用
 1. T&&

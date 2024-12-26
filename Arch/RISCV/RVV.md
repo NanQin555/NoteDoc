@@ -158,7 +158,7 @@ vsaddu.vv vsaddu.vx
 
 ### policy and masked
 
-vm vta vma
+vta vma vtu vmu
 
 no suffix: unmasked(vm=1) and tail-agnostic(vta=1)
 
@@ -168,9 +168,9 @@ _m suffix: masked(vm=0) and tail-agnostic(vta=1) and mask-agnostik(vma=1)
 
 _tum suffix: masked(vm=0) and tail-undisturbed(vta=0) and mask-agnostic(vma=1)
 
-_mu suffix: masked and tail-agnostic and mask-undisturbed
+_mu suffix: masked(vm=0) and tail-agnostic and mask-undisturbed
 
-_tumu ...
+_tumu suffix: masked(vm=0) and tail-undisturbed and mask-undisturbed
 
 m: repersents mask
 
